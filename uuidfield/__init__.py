@@ -4,5 +4,5 @@ try:
         .get_distribution('django-uuidfield').version
 except Exception as e:
     VERSION = 'unknown'
-    
+
 from .fields import UUIDField

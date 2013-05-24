@@ -22,7 +22,7 @@ if not settings.configured:
         DEBUG=False,
     )
 
-from django_nose import NoseTestSuiteRunner
+from django.test.simple import DjangoTestSuiteRunner
 
 
 def runtests(*test_args, **kwargs):
@@ -35,7 +35,7 @@ def runtests(*test_args, **kwargs):
 
     kwargs.setdefault('interactive', False)
 
-    test_runner = NoseTestSuiteRunner(**kwargs)
+    test_runner = DjangoTestSuiteRunner(**kwargs)
 
     failures = test_runner.run_tests(test_args)
     sys.exit(failures)
@@ -43,7 +43,7 @@ def runtests(*test_args, **kwargs):
 if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('--verbosity', dest='verbosity', action='store', default=1, type=int)
-    parser.add_options(NoseTestSuiteRunner.options)
+    parser.add_options(DjangoTestSuiteRunner.options)
     (options, args) = parser.parse_args()
 
     runtests(*args, **options.__dict__)
