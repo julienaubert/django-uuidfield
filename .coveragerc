@@ -1,0 +1,8 @@
+[run]
+source = uuidfield
+omit = */tests/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+

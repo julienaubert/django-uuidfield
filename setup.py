@@ -9,10 +9,10 @@ setup(
     url='https://github.com/dcramer/django-uuidfield',
     zip_safe=False,
     install_requires=[
-        'django',
+        'django', 'six'
     ],
     tests_require=[
-        'psycopg2',
+        'psycopg2', 'coverage'
     ],
     packages=find_packages(),
     test_suite='runtests.runtests',
@@ -22,6 +22,9 @@ setup(
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
         "Operating System :: OS Independent",
-        "Topic :: Software Development"
+        "Topic :: Software Development",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.3",
     ],
 )

@@ -1,6 +1,12 @@
 django-uuidfield
 ----------------
 
+.. image:: https://travis-ci.org/julienaubert/django-uuidfield.png?branch=python3   
+   :target: https://travis-ci.org/julienaubert/django-uuidfield
+.. image:: https://coveralls.io/repos/julienaubert/django-uuidfield/badge.png?branch=python3 
+   :target: https://coveralls.io/r/julienaubert/django-uuidfield?branch=python3 
+
+
 Provides a UUIDField for your Django models.
 
 Installation

@@ -1,14 +1,17 @@
 import uuid
 
 from django import forms
+from django.core.exceptions import ValidationError
 from django.db.models import Field, SubfieldBase
-from django.utils.six import PY3
+from django.utils.translation import ugettext as _
 
-if PY3:
+import six
+
+try:
     from django.utils.encoding import smart_text
-else:
+except ImportError:
+    # for Django <1.5
     from django.utils.encoding import smart_unicode as smart_text
-
 
 try:
     # psycopg2 needs us to register the uuid type
@@ -26,7 +29,7 @@ class StringUUID(uuid.UUID):
         super(StringUUID, self).__init__(*args, **kwargs)
 
     def __unicode__(self):
-        return unicode(str(self))
+        return six.text_type(str(self))
 
     def __str__(self):
         if self.hyphenate:
@@ -38,6 +41,7 @@ class StringUUID(uuid.UUID):
         return len(self.__unicode__())
 
 
+@six.add_metaclass(SubfieldBase)
 class UUIDField(Field):
     """
     A field which stores a UUID value in hex format. This may also have
@@ -46,7 +50,6 @@ class UUIDField(Field):
     UUIDs are expected to be unique we enforce this with a DB constraint.
     """
     # TODO: support binary storage types
-    __metaclass__ = SubfieldBase
 
     def __init__(self, version=4, node=None, clock_seq=None,
             namespace=None, name=None, auto=False, hyphenate=False, *args, **kwargs):
@@ -124,7 +127,7 @@ class UUIDField(Field):
         if val is None:
             data = ''
         else:
-            data = unicode(val)
+            data = six.text_type(val)
         return data
 
     def to_python(self, value):
@@ -138,7 +141,7 @@ class UUIDField(Field):
             return None
         # attempt to parse a UUID including cases in which value is a UUID
         # instance already to be able to get our StringUUID in.
-        return StringUUID(smart_text(value), hyphenate=self.hyphenate))
+        return StringUUID(smart_text(value), hyphenate=self.hyphenate)
 
     def formfield(self, **kwargs):
         defaults = {
